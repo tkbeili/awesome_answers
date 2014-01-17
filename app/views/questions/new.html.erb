@@ -2,15 +2,15 @@
 <%= form_for @question, html: {class: "form-horizontal"} do |f| %>
 
   <div class="form-group">
-    <label>Question Title</label>
+    <%= f.label :title %>
     <%= f.text_field :title, class: "form-control" %>
   </div>
   <br />
   <div class="form-group">
-    <label>Question Body</label>
+    <%= f.label :body %>
     <%= f.text_area :body, class: "form-control" %>
   </div>
   <br />
-  <%= f.submit class: "Btn btn-primary" %>
+  <%= f.submit class: "btn btn-primary" %>
 
 <% end %>
