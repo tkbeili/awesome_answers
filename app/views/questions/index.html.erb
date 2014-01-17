@@ -1,0 +1,10 @@
+<h1>Welcome to Awesome Answers</h1>
+<% @questions.each do |question| %>
+  <%= link_to question.title, question %>
+  <br/>
+  <p><%= question.body.truncate(25) %>
+  <hr />
+<% end %>
+<br/>
+<br/>
+<%= link_to "New Question", new_question_path, class: "btn btn-primary" %>
