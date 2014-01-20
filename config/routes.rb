@@ -1,5 +1,8 @@
 AwesomeAnswers::Application.routes.draw do
-  resources :questions
+  resources :questions do 
+    get :like, on: :member
+  end
+
   root 'questions#index'
   
   # The priority is based upon order of creation: first created -> highest priority.

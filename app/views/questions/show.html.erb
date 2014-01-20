@@ -1,6 +1,16 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
 <p>Hit Count: <%= @question.hit_count %></p>
-<p><%= link_to "Delete", @question, method: :delete, class: "btn btn-danger" %></p>
+<p>Like Count: <%= @question.like_count %></p>
+<p>
+  <% if session[:liked_question_ids] && session[:liked_question_ids].include?(@question.id) %>
+    You've Liked it already!
+  <% else %>
+    <%= link_to "Like", like_question_path(@question), class: "btn btn-primary" %>
+  <% end %>
+  |
+  <%= link_to "Edit", edit_question_path(@question), class: "btn btn-info" %>
+  <%= link_to "Delete", @question, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure?"} %>
+</p>
 <br/>
 <%= link_to "All Questions", questions_path %>
