@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :find_question, only: [:edit, :update, :show, :destroy, :like]
 
   def index
     @questions = Question.all
@@ -9,40 +10,51 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(params.require(:question).permit([:title, :body]))
-    @question.save
-    redirect_to questions_path
+    @question = Question.new(question_params)
+    if @question.save
+      redirect_to questions_path, notice: "Question created successfully"
+    else
+      render :new
+    end
   end
 
   def edit
-    @question = Question.find(params[:id])
   end
 
   def update
-    @question = Question.find(params[:id])
-    @question.update_attributes(params.require(:question).permit([:title, :body]))
-    redirect_to questions_path
+    if @question.update_attributes(question_params)
+      redirect_to questions_path
+    else
+      render :edit
+    end
   end
 
   def show
-    @question = Question.find(params[:id])
     @question.hit_count += 1
     @question.save
   end
 
   def destroy
-    @question = Question.find(params[:id])
     @question.destroy
     redirect_to questions_path
   end
 
   def like
-    @question = Question.find(params[:id])
     @question.like_count += 1
     @question.save
     session[:liked_question_ids] ||= []
     session[:liked_question_ids] << @question.id
     redirect_to @question
+  end
+
+  private
+
+  def question_params
+    params.require(:question).permit([:title, :body])
+  end
+
+  def find_question
+    @question = Question.find(params[:id])
   end
 
 end
