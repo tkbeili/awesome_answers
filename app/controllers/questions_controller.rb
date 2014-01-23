@@ -30,6 +30,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @answer  = Answer.new
+    @answers = @question.answers
     @question.hit_count += 1
     @question.save
   end

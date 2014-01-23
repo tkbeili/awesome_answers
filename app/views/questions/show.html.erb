@@ -13,4 +13,27 @@
   <%= link_to "Delete", @question, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure?"} %>
 </p>
 <br/>
+
+<%= form_for [@question, @answer] do |f| %>
+  <% if @answer.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @answer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :body, "Enter New Answer" %>
+    <%= f.text_field :body, class: "form-control" %>
+  </div>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
+
+<h2>Answers</h2>
+<% @answers.each do |answer| %>
+  <%= answer.body %>
+  <hr>
+<% end %>
 <%= link_to "All Questions", questions_path %>
