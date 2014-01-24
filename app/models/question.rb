@@ -12,8 +12,6 @@ class Question < ActiveRecord::Base
 
   default_scope { order("updated_at DESC") }
 
-
-
   before_save :upcase_title
 
   private
