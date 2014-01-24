@@ -34,6 +34,7 @@
 <h2>Answers</h2>
 <% @answers.each do |answer| %>
   <%= answer.body %>
+  <p>Created On: <%= formatted_date(answer.created_at) %>
   <hr>
 <% end %>
 <%= link_to "All Questions", questions_path %>
