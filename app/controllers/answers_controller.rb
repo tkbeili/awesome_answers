@@ -10,6 +10,12 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    @answer = @question.answers.find(params[:id])
+    @answer.destroy
+    redirect_to @question, notice: "Answer deleted successfully!"
+  end
+
   private
 
   def answer_attributes
