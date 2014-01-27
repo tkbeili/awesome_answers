@@ -19,6 +19,9 @@ gem 'bootstrap-sass'
 
 gem 'rails_12factor', group: :production
 
+gem "devise", "~> 3.2.2"
+gem "quiet_assets"
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

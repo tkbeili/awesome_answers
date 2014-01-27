@@ -2,9 +2,8 @@ class Question < ActiveRecord::Base
   has_many :categorizations
   has_many :categories, through: :categorizations
 
-
   has_many :answers
-
+  belongs_to :user
 
   validates_presence_of :title, :body
 

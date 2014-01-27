@@ -1,2 +1,0 @@
-namespace :category do
-end
