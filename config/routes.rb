@@ -1,7 +1,10 @@
 AwesomeAnswers::Application.routes.draw do
+
   devise_for :users
   resources :questions do 
-    get :like, on: :member
+    resources :likes, only: :create do
+      delete :destroy, on: :collection
+    end
     get :top_questions, on: :collection
     resources :answers
   end

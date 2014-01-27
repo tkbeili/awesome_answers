@@ -3,10 +3,12 @@
 <p>Hit Count: <%= @question.hit_count %></p>
 <p>Like Count: <%= @question.like_count %></p>
 <p>
-  <% if session[:liked_question_ids] && session[:liked_question_ids].include?(@question.id) %>
-    You've Liked it already!
-  <% else %>
-    <%= link_to "Like", like_question_path(@question), class: "btn btn-primary" %>
+  <% if user_signed_in? %>
+    <% if current_user.has_liked? @question %>
+      <%= link_to "UnLike", question_likes_path(@question), class: "btn btn-danger", method: :delete %>
+    <% else %>
+      <%= link_to "Like", question_likes_path(@question), class: "btn btn-primary", method: :post %>
+    <% end %>
   <% end %>
   |
   <%= link_to "Edit", edit_question_path(@question), class: "btn btn-info" %>
