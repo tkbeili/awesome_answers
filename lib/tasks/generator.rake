@@ -10,4 +10,14 @@ namespace :generator do
     end
     puts "Generated #{question_count} questions with #{answer_count} answers each"
   end
+
+  desc "Generate Default Categories"
+  task :default_cateogires => :environment do
+    [ "Technology", "Sports", "Entertainment", "Travel", 
+      "Photography","Food", "Cars", "Programming", "Design", "Investing", 
+      "Real Estate"].each do |category_name|
+        Category.create(name: category_name)
+      end
+  end
+
 end

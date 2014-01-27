@@ -1,0 +1,2 @@
+namespace :category do
+end
