@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
     @answer      = @question.answers.new(answer_attributes)
     @answer.user = current_user
     if @answer.save
-      AnswerMailer.new_answer(@answer).deliver
+      AnswerMailer.delay.new_answer(@answer)
       redirect_to @question, notice: "Thanks for your answer"
     else
       render "questions/show"
