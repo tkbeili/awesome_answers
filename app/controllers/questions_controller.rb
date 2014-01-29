@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :find_question, only: [:edit, :update, :show, :destroy, :like]
+  before_action :find_question, only: [:edit, :update, :destroy, :like]
 
   def index
     @questions = Question.all
@@ -31,6 +31,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @question = Question.find(params[:id])
     @answer  = Answer.new
     @answers = @question.answers
     @question.hit_count += 1

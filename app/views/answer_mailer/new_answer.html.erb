@@ -1,0 +1,9 @@
+<p>Hello <%= @user.name_display %>,</p>
+<br>
+<p>You've got new answer to your question titled: <%= link_to @question.title, question_url(@question) %></p>
+<br>
+<p>The answer is: <%= @answer.body %></p>
+<br>
+<p>Regards,</p>
+<br>
+<p>Awesome Answers Team</p>

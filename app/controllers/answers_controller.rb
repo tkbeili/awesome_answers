@@ -1,10 +1,12 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_question
 
   def create
     @answer      = @question.answers.new(answer_attributes)
     @answer.user = current_user
     if @answer.save
+      AnswerMailer.new_answer(@answer).deliver
       redirect_to @question, notice: "Thanks for your answer"
     else
       render "questions/show"
