@@ -1,0 +1,4 @@
+<%= form_for [question, vote] do |f| %>
+  <%= f.hidden_field :is_up, as: :hidden, value: is_up %>
+  <%= f.submit label, class: "btn btn-danger" %>
+<% end %>

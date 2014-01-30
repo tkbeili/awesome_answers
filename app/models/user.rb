@@ -10,12 +10,19 @@ class User < ActiveRecord::Base
   has_many :likes
   has_many :liked_questions, through: :likes, source: :question
 
+  has_many :votes
+  has_many :voted_questions, through: :likes, source: :question
+
   def name_display
     if first_name || last_name
       "#{first_name} #{last_name}".strip
     else
       email
     end
+  end
+
+  def vote_for question
+    Vote.where(question: question, user: self).first
   end
 
   def like_for question

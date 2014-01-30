@@ -8,6 +8,9 @@ class Question < ActiveRecord::Base
   has_many :likes
   has_many :likers, through: :likes, source: :user
 
+  has_many :votes
+  has_many :voted_users, through: :likes, source: :user
+
   validates_presence_of :title, :body
 
   scope :recent, -> { where(["created_at > ?", Time.now - 10.days]) }
@@ -24,7 +27,12 @@ class Question < ActiveRecord::Base
   end
 
   def unlike_by user
-    likers.delete(user)  && increment_likes(-1)
+    likers.delete(user) && increment_likes(-1)
+  end
+
+  def update_vote_count
+    self.votes_count = votes.up.count - votes.down.count
+    save
   end
 
   private

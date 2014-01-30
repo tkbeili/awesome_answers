@@ -2,6 +2,7 @@
 <p><%= @question.body %></p>
 <p>Hit Count: <%= @question.hit_count %></p>
 <p>Like Count: <%= @question.like_count %></p>
+<%= render "/votes/vote_buttons", question: @question %>
 <p>
   <% if user_signed_in? %>
     <% if current_user.has_liked? @question %>
