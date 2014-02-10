@@ -9,6 +9,8 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
+gem "cancan"
+
 gem 'delayed_job_active_record'
 
 # Use Uglifier as compressor for JavaScript assets
@@ -22,6 +24,8 @@ gem 'bootstrap-sass'
 gem 'rails_12factor', group: :production
 
 gem "devise", "~> 3.2.2"
+gem "cancan"
+
 gem "quiet_assets"
 
 gem "letter_opener", group: :development
