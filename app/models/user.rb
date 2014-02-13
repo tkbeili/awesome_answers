@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :liked_questions, through: :likes, source: :question
 
   has_many :votes
-  has_many :voted_questions, through: :likes, source: :question
+  has_many :voted_questions, through: :votes, source: :question
 
   def name_display
     if first_name || last_name

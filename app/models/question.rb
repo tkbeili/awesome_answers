@@ -9,7 +9,8 @@ class Question < ActiveRecord::Base
   has_many :likers, through: :likes, source: :user
 
   has_many :votes
-  has_many :voted_users, through: :likes, source: :user
+  has_many :voted_users, through: :votes, source: :user
+
 
   validates_presence_of :title, :body
 

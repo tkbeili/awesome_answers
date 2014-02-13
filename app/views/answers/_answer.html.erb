@@ -1,0 +1,16 @@
+<div id="<%= dom_id(answer) %>">
+  <div class="row">
+    <div class="col-lg-10"><%= answer.body %></div>
+    <div class="col-lg-6">
+      <div class="pull-right">
+        <%= link_to "Delete", [@question, answer], method: :delete, class: "btn btn-danger", remote: true, data: {confirm: "Are you sure you want to delete answer?"} %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1">
+      <p>Created On: <%= formatted_date(answer.created_at) %>
+    </div>
+  </div>
+  <hr>
+</div>
