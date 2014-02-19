@@ -30,6 +30,8 @@ gem "quiet_assets"
 
 gem "letter_opener", group: :development
 
+gem 'will_paginate', '~> 3.0'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: [:edit, :update, :destroy, :like]
 
   def index
-    @questions = Question.all
+    @questions = Question.order("created_at DESC").page(params[:page]).per_page(10)
   end
 
   def new

@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def tester
+    self
+  end
+
   def vote_for question
     Vote.where(question: question, user: self).first
   end

@@ -6,6 +6,7 @@
   <p>Created On: <%= formatted_date(question.created_at) %>
   <hr />
 <% end %>
+<%= will_paginate @questions, previous_label: h("<"), next_label: h(">") %>
 <br/>
 <br/>
 <%= link_to "New Question", new_question_path, class: "btn btn-primary" %>
