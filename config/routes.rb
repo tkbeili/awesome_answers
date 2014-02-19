@@ -11,6 +11,12 @@ AwesomeAnswers::Application.routes.draw do
     resources :answers
   end
 
+  resources :answer, only: [] do
+    resources :likes, only: :create do
+      delete :destroy, on: :collection
+    end
+  end
+
   root 'questions#index'
 
 end

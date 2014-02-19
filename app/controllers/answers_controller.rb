@@ -33,7 +33,7 @@ class AnswersController < ApplicationController
   end
 
   def find_question
-    @question = current_user.questions.find(params[:question_id])
+    @question = Question.find(params[:question_id])
   end
 
 end

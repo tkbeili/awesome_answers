@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   has_many :answers
 
   has_many :likes
-  has_many :liked_questions, through: :likes, source: :question
+  has_many :liked_questions, through: :likes, source: :likeable, source_type: "Question"
+  has_many :liked_answers, through: :likes, source: :likeable, source_type: "Answer"
 
   has_many :votes
   has_many :voted_questions, through: :votes, source: :question
@@ -29,12 +30,15 @@ class User < ActiveRecord::Base
     Vote.where(question: question, user: self).first
   end
 
-  def like_for question
-    likes.where(question_id: question.id).first
+  def like_for likeable
+    likeable.likes.where(user_id: self).first
   end
 
-  def has_liked? question
-    liked_questions.include? question
+  def has_liked? likeable
+    case likeable
+    when Question then liked_questions.include? likeable
+    when Answer then liked_answers.include? likeable
+    end
   end
 
 end

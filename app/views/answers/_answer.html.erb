@@ -3,7 +3,14 @@
     <div class="col-lg-10"><%= answer.body %></div>
     <div class="col-lg-6">
       <div class="pull-right">
-        <%= link_to "Delete", [@question, answer], method: :delete, class: "btn btn-danger", remote: true, data: {confirm: "Are you sure you want to delete answer?"} %>
+        <% if can? :destroy, answer %>
+          <%= link_to "Delete", [@question, answer], method: :delete, class: "btn btn-danger", remote: true, data: {confirm: "Are you sure you want to delete answer?"} %>
+        <% end %>
+        <% if current_user.has_liked? answer %>
+          <%= link_to "UnLike", answer_likes_path(answer), class: "btn btn-danger", method: :delete %>
+        <% else %>
+          <%= link_to "Like", answer_likes_path(answer), class: "btn btn-primary", method: :post %>
+        <% end %>
       </div>
     </div>
   </div>

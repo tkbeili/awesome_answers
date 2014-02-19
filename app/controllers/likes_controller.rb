@@ -1,27 +1,39 @@
 class LikesController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :find_question
+  before_filter :find_likeable
 
   def create
-    if @question.like_by current_user
-      redirect_to @question, notice: "Thanks for liking the question"
+    if @likeable.like_by current_user
+      redirect_to likeable_redirect_path, notice: "Thanks for liking the #{resource_name}"
     else
-      redirect_to @question, notice: "Sorry there was trouble liking your question."
+      redirect_to likeable_redirect_path, notice: "Sorry there was trouble liking your #{resource_name}."
     end
   end
 
   def destroy
-    if @question.unlike_by current_user
-      redirect_to @question, notice: "The question has been unliked successfully."
+    if @likeable.unlike_by current_user
+      redirect_to likeable_redirect_path, notice: "The #{resource_name} has been unliked successfully."
     else
-      redirect_to @question, notice: "Sorry there was trouble liking your question."
+      redirect_to likeable_redirect_path, notice: "Sorry there was trouble liking your #{resource_name}."
     end
   end
 
   private
 
-  def find_question
-    @question = Question.find(params[:question_id])
+  def find_likeable
+    klass     = [Question, Answer].detect { |c| params["#{c.name.underscore}_id"] }
+    @likeable = klass.find(params["#{klass.name.underscore}_id"])
+  end
+
+  def resource_name
+    @likeable.class.name.downcase
+  end
+
+  def likeable_redirect_path
+    case @likeable
+    when Question then @likeable
+    when Answer   then @likeable.question
+    end
   end
 
 end

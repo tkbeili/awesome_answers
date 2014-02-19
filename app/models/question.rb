@@ -5,7 +5,7 @@ class Question < ActiveRecord::Base
   has_many :answers
   belongs_to :user
 
-  has_many :likes
+  has_many :likes, as: :likeable
   has_many :likers, through: :likes, source: :user
 
   has_many :votes
@@ -24,11 +24,12 @@ class Question < ActiveRecord::Base
   before_save :upcase_title
 
   def like_by user
-    likers << user && increment_likes(1)
+    likers << user && change_like_count(1)
   end
 
   def unlike_by user
-    likers.delete(user) && increment_likes(-1)
+    likers.delete(user)
+    change_like_count(-1) if like_count > 0
   end
 
   def update_vote_count
@@ -38,9 +39,9 @@ class Question < ActiveRecord::Base
 
   private
 
-  def increment_likes amount
+  def change_like_count amount
     self.like_count += amount
-    save
+    save!
   end
 
   def upcase_title
