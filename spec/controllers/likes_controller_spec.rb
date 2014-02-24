@@ -1,13 +1,10 @@
-require "spec_helper"
-
 describe LikesController do
-  let(:user)     { FactoryGirl.create(:user)                         }
-  let(:question) { FactoryGirl.create(:question)                     }
-  let(:answer)   { FactoryGirl.create(:answer, question: question)   }
+  let(:user)     { create(:user)                         }
+  let(:question) { create(:question)                     }
+  let(:answer)   { create(:answer, question: question)   }
 
   before do
-    request.env['warden'].stub :authenticate! => user
-    controller.stub :current_user => user
+    sign_in user
   end
 
   describe "Liking" do
@@ -37,7 +34,6 @@ describe LikesController do
   end
 
   describe "UnLiking" do
-
     context "a Question" do
       subject { delete :destroy, question_id: question.id }
 
@@ -52,8 +48,8 @@ describe LikesController do
       end
   
       context "with a like" do
-        let(:question) { FactoryGirl.create(:question, like_count: 1)              }
-        let!(:like)    { FactoryGirl.create(:like, likeable: question, user: user) }
+        let(:question) { create(:question, like_count: 1)              }
+        let!(:like)    { create(:like, likeable: question, user: user) }
 
         it "removes a like from a question" do
           expect { subject }.to change{ question.likes.count }.by(-1)
@@ -76,8 +72,8 @@ describe LikesController do
       end
   
       context "with a like" do
-        let(:question) { FactoryGirl.create(:question, like_count: 1)              }
-        let!(:like)    { FactoryGirl.create(:like, likeable: answer, user: user) }
+        let(:question) { create(:question, like_count: 1)              }
+        let!(:like)    { create(:like, likeable: answer, user: user) }
 
         it "removes a like from a n answer" do
           expect { subject }.to change{ answer.likes.count }.by(-1)

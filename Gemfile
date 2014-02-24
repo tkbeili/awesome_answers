@@ -33,9 +33,14 @@ gem "letter_opener", group: :development
 gem 'will_paginate', '~> 3.0'
 
 
-gem "rspec-rails", group: [:development, :test]
-gem "factory_girl_rails", group: [:development, :test]
-gem "faker", group: [:development, :test]
+group :test, :development do
+  gem 'capybara', '~> 2.1.0'
+  # gem 'capybara-webkit', '~> 1.1.1'
+  gem 'selenium-webdriver'
+  gem "rspec-rails", group: [:development, :test]
+  gem "factory_girl_rails", group: [:development, :test]
+  gem "faker", group: [:development, :test]
+end
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

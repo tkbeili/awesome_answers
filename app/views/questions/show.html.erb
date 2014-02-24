@@ -20,9 +20,13 @@
 </p>
 <br/>
 
-<div class="new-answer-form">
-  <%= render "/answers/form", answer: @answer, question: @question %>
-</div>
+<% if user_signed_in? %>
+  <div class="new-answer-form">
+    <%= render "/answers/form", answer: @answer, question: @question %>
+  </div>
+<% else %>
+  <%= link_to "Sign In To Answer", new_user_session_path %>
+<% end %>
 
 <h2>Answers</h2>
 <div class="answers">
