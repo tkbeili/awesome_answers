@@ -1,3 +1,5 @@
+require "spec_helper"
+
 describe LikesController do
   let(:user)     { create(:user)                         }
   let(:question) { create(:question)                     }
