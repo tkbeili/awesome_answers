@@ -15,3 +15,4 @@
 /log/*.log
 /tmp
 /config/initializers/email_vars.rb
+/config/initializers/stripe.rb

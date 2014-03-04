@@ -1,0 +1,18 @@
+#stripe_error.alert-danger
+%br
+= label_tag "card_number"
+= text_field_tag "card_number"
+%br
+= label_tag "card_month"
+= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"}
+= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+10}, {name: nil, id: "card_year"}
+%br
+= label_tag "card_ccv"
+= text_field_tag "card_ccv"
+%br
+
+= form_tag tips_path, id: "new_tip" do |f|
+  = hidden_field_tag "stripe_card_token"
+  = select_tag "amount", options_for_select([5, 10, 15, 20, 50, 100])
+  %br
+  = submit_tag "Submit"
