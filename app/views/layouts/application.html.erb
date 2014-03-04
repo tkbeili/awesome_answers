@@ -4,6 +4,8 @@
   <title>AwesomeAnswers</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "https://js.stripe.com/v1/", "application" %>
+  <%= tag :meta, :name => "stripe-key", :content => ENV['STRIPE_PUBLISHABLE_KEY'] %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -23,10 +25,18 @@
             |
             <%= link_to "Sign In", new_user_session_path %>
           <% end %>
+          | 
+          <%= link_to "Tip us!", new_tip_path %>
+          | 
+          Language:
+          <%= link_to_unless_current "English", locale: "en" %>
+          <%= link_to_unless_current "Pig Latin", locale: "pl" %>
         </div>
       </li>
     </ul>
   </nav>
+
+
 
   <% if flash[:alert] %>
     <div class="alert alert-danger"><%= flash[:alert] %></div>
