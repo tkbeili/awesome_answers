@@ -9,7 +9,13 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
+gem 'friendly_id', '~> 5.0.0'
+
+gem "haml-rails"
+
 gem "cancan"
+
+gem 'stripe'
 
 gem 'delayed_job_active_record'
 
@@ -29,6 +35,7 @@ gem "cancan"
 gem "quiet_assets"
 
 gem "letter_opener", group: :development
+gem 'pry-rails', group: :development
 
 gem 'will_paginate', '~> 3.0'
 
@@ -53,8 +60,6 @@ gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
-
-gem 'ffaker'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

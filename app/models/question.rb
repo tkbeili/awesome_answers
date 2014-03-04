@@ -1,4 +1,7 @@
 class Question < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   has_many :categorizations
   has_many :categories, through: :categorizations
 
@@ -22,6 +25,10 @@ class Question < ActiveRecord::Base
   default_scope { order("questions.updated_at DESC") }
 
   before_save :upcase_title
+
+  # def should_generate_new_friendly_id?
+  #   new_record?
+  # end
 
   def like_by user
     likers << user && change_like_count(1)
