@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140219081848) do
+ActiveRecord::Schema.define(version: 20140303073858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 20140219081848) do
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+
+  create_table "api_keys", force: true do |t|
+    t.string   "access_token"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_keys", ["user_id"], name: "index_api_keys_on_user_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -71,6 +80,15 @@ ActiveRecord::Schema.define(version: 20140219081848) do
   add_index "likes", ["likeable_id"], name: "index_likes_on_likeable_id", using: :btree
   add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
 
+  create_table "options", force: true do |t|
+    t.string   "body"
+    t.integer  "question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "options", ["question_id"], name: "index_options_on_question_id", using: :btree
+
   create_table "questions", force: true do |t|
     t.string   "title"
     t.text     "body"
@@ -80,8 +98,10 @@ ActiveRecord::Schema.define(version: 20140219081848) do
     t.integer  "like_count",  default: 0
     t.integer  "user_id"
     t.integer  "votes_count", default: 0
+    t.string   "slug"
   end
 
+  add_index "questions", ["slug"], name: "index_questions_on_slug", using: :btree
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|

@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   has_many :votes
   has_many :voted_questions, through: :votes, source: :question
 
+  has_one :api_key
+
+  before_create :generate_api_key
+
   def name_display
     if first_name || last_name
       "#{first_name} #{last_name}".strip
@@ -39,6 +43,12 @@ class User < ActiveRecord::Base
     when Question then liked_questions.include? likeable
     when Answer then liked_answers.include? likeable
     end
+  end
+
+  private
+
+  def generate_api_key
+    self.api_key = ApiKey.new
   end
 
 end

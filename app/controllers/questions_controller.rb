@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
+    @question = Question.friendly.find(params[:id])
     @answer  = Answer.new
     @answers = @question.answers
     @question.hit_count += 1
@@ -58,7 +58,7 @@ class QuestionsController < ApplicationController
   end
 
   def find_question
-    @question = current_user.questions.find(params[:id])
+    @question = current_user.questions.friendly.find(params[:id])
   end
 
 end
