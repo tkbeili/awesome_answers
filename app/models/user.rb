@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :questions
@@ -25,6 +25,23 @@ class User < ActiveRecord::Base
       email
     end
   end
+
+def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    user = User.where(:email => data["email"]).first
+
+    first_name = data["name"].split(" ")[0]
+    last_name = data["name"].split(" ")[1]
+
+    unless user
+        user = User.create(first_name: first_name,
+                           last_name: last_name,
+                           email: data["email"],
+                           password: Devise.friendly_token[0,20]
+                          )
+    end
+    user
+end
 
   def tester
     self

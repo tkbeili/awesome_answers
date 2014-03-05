@@ -1,15 +1,15 @@
 $ ->
   return if typeof Stripe == 'undefined'
   Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
-  subscription.setupForm()
+  charge.setupForm()
 
-subscription =
+charge =
   setupForm: ->
     $('#new_tip').on "submit", ->
       $("#stripe_error").html("")
       $('input[type=submit]').attr('disabled', true)
       if $('#card_number').length
-        subscription.processCard()
+        charge.processCard()
         false
       else
         true
@@ -20,7 +20,7 @@ subscription =
       cvc:      $('#card_ccv').val()
       expMonth: $('#card_month').val()
       expYear:  $('#card_year').val()
-    Stripe.createToken(card, subscription.handleStripeResponse)
+    Stripe.createToken(card, charge.handleStripeResponse)
   
   handleStripeResponse: (status, response) ->
     if status == 200
