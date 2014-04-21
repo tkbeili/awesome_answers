@@ -5,12 +5,15 @@
     <br>
   <% else %>
     <%= render "/votes/vote_form", vote: vote, question: question, is_up: true, label: "Up Vote" %>
+    <%#= button_to "Up Vote", [question, vote, {vote: {is_up: true}}], class: "btn btn-danger", method: (vote.persisted? ? :patch : :post) %>
   <% end %>
   Vote Count: <%= question.votes_count %>
   <br>
   <% if vote.persisted? && vote.is_down? %>
-    <%= link_to "UnVote", [question, vote], class: "btn btn-danger", method: :delete %>
+    <%= button_to "UnVote", [question, vote], class: "btn btn-danger", method: :delete %>
   <% else %>
+    <%#= button_to "Down Vote", [question, vote, {vote: {is_up: false}}], class: "btn btn-danger", method: (vote.persisted? ? :patch : :put) %>
+
     <%= render "/votes/vote_form", vote: vote, question: question, is_up: false, label: "Down Vote" %>
   <% end %>
 

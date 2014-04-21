@@ -45,3 +45,23 @@ RSpec.configure do |config|
 
   config.order = "random"
 end
+
+# user = User.find 150
+
+# old_products = user.products.where("created_at < ?", Time.now - 5.day)
+# new_products = user.products.where("created_at > ?", Time.now - 5.day)
+
+# ids = []
+
+
+
+
+
+
+
+
+
+
+
+
+

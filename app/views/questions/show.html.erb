@@ -1,24 +1,26 @@
-<h1><%= @question.title %></h1>
-<p><%= @question.body %></p>
-<p>Hit Count: <%= @question.hit_count %></p>
-<p>Like Count: <%= @question.like_count %></p>
-<%= render "/votes/vote_buttons", question: @question %>
-<p>
-  <% if user_signed_in? %>
-    <% if current_user.has_liked? @question %>
-      <%= link_to "UnLike", question_likes_path(@question), class: "btn btn-danger", method: :delete %>
-    <% else %>
-      <%= link_to "Like", question_likes_path(@question), class: "btn btn-primary", method: :post %>
+<%= cache @question do %>
+  <h1><%= @question.title %></h1>
+  <p><%= @question.body %></p>
+  <p>Hit Count: <%= @question.hit_count %></p>
+  <p>Like Count: <%= @question.like_count %></p>
+  <%= render "/votes/vote_buttons", question: @question %>
+  <p>
+    <% if user_signed_in? %>
+      <% if current_user.has_liked? @question %>
+        <%= link_to "UnLike", question_likes_path(@question), class: "btn btn-danger", method: :delete %>
+      <% else %>
+        <%= link_to "Like", question_likes_path(@question), class: "btn btn-primary", method: :post %>
+      <% end %>
     <% end %>
-  <% end %>
-  <% if can? :edit, @question %>
-    <%= link_to "Edit", edit_question_path(@question), class: "btn btn-info" %>
-  <% end %>
-  <% if can? :destroy, @question %>
-    <%= link_to "Delete", @question, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure?"} %>
-  <% end %>
-</p>
-<br/>
+    <% if can? :edit, @question %>
+      <%= link_to "Edit", edit_question_path(@question), class: "btn btn-info" %>
+    <% end %>
+    <% if can? :destroy, @question %>
+      <%= link_to "Delete", @question, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure?"} %>
+    <% end %>
+  </p>
+  <br/>
+<% end %>
 
 <% if user_signed_in? %>
   <div class="new-answer-form">
@@ -27,6 +29,7 @@
 <% else %>
   <%= link_to "Sign In To Answer", new_user_session_path %>
 <% end %>
+
 
 <h2>Answers</h2>
 <div class="answers">

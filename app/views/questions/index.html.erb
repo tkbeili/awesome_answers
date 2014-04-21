@@ -1,11 +1,18 @@
 <h1><%= t "questions.welcome" %></h1>
-<% @questions.each do |question| %>
-  <%= link_to question.title, question %>
-  <br/>
-  <p><%= question.body.truncate(25) %></p>
-  <p>Created On: <%= formatted_date(question.created_at) %>
-  <hr />
+
+<h2> Top Questions </h2>
+<% cache("top_questions", skip_digest: true) do %>
+  <% @top_questions.each do |question| %>
+    <%= render "question", question: question %>
+  <% end %>
 <% end %>
+<hr>
+
+<h2> Recent Questions </h2>
+<% @questions.each do |question| %>
+  <%= render "question", question: question %>
+<% end %>
+
 <%= will_paginate @questions, previous_label: h("<"), next_label: h(">") %>
 <br/>
 <br/>

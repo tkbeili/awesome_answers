@@ -3,7 +3,8 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: [:edit, :update, :destroy, :like]
 
   def index
-    @questions = Question.order("created_at DESC").page(params[:page]).per_page(10)
+    @questions     = Question.order("created_at DESC").page(params[:page]).per_page(10)
+    @top_questions = Question.order("hit_count DESC").limit(3)
   end
 
   def new
@@ -24,6 +25,7 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update_attributes(question_params)
+      expire_fragment("top_questions")
       redirect_to questions_path
     else
       render :edit
@@ -32,8 +34,8 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.friendly.find(params[:id])
-    @answer  = Answer.new
-    @answers = @question.answers
+    @answer   = Answer.new
+    @answers  = @question.answers
     @question.hit_count += 1
     @question.save
   end

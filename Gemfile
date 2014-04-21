@@ -1,13 +1,15 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
+gem 'rails', '4.1.0'
 
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 4.0.3'
+
+gem "spring", group: :development
 
 gem 'friendly_id', '~> 5.0.0'
 
@@ -31,23 +33,24 @@ gem 'rails_12factor', group: :production
 
 gem "devise", "~> 3.2.2"
 gem "omniauth-google-oauth2", "~> 0.2.2"
-gem "cancan"
 
 gem "quiet_assets"
 
 gem "letter_opener", group: :development
 gem 'pry-rails', group: :development
 
-gem 'will_paginate', '~> 3.0'
+gem 'will_paginate', '~> 3.0.5'
 
 
 group :test, :development do
+  gem "minitest"
   gem 'capybara', '~> 2.1.0'
   # gem 'capybara-webkit', '~> 1.1.1'
   gem 'selenium-webdriver'
   gem "rspec-rails", group: [:development, :test]
   gem "factory_girl_rails", group: [:development, :test]
   gem "faker", group: [:development, :test]
+  gem "rails-erd", "~> 1.1.0"
 end
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes

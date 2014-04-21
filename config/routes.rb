@@ -11,6 +11,7 @@ AwesomeAnswers::Application.routes.draw do
   end
 
   resources :answer, only: [] do
+    resources :comments
     resources :likes, only: :create do
       delete :destroy, on: :collection
     end
