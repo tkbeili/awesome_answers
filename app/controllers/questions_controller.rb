@@ -1,9 +1,10 @@
 class QuestionsController < ApplicationController
+
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:edit, :update, :destroy, :like]
 
   def index
-    @questions     = Question.order("created_at DESC").page(params[:page]).per_page(10)
+    @questions = Question.page(params[:page]).per_page(10)
     @top_questions = Question.order("hit_count DESC").limit(3)
   end
 
@@ -40,23 +41,10 @@ class QuestionsController < ApplicationController
     @question.save
   end
 
-  def destroy
-    @question.destroy
-    redirect_to questions_path
-  end
-
-  def like
-    @question.like_count += 1
-    @question.save
-    session[:liked_question_ids] ||= []
-    session[:liked_question_ids] << @question.id
-    redirect_to @question
-  end
-
   private
 
   def question_params
-    params.require(:question).permit([:title, :body, {category_ids: []}])
+    params.require(:question).permit([:title, :body, :image, {category_ids: []}])
   end
 
   def find_question

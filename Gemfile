@@ -33,25 +33,46 @@ gem 'rails_12factor', group: :production
 
 gem "devise", "~> 3.2.2"
 gem "omniauth-google-oauth2", "~> 0.2.2"
+gem 'omniauth-twitter'
+
+gem "twitter"
 
 gem "quiet_assets"
 
 gem "letter_opener", group: :development
-gem 'pry-rails', group: :development
+# gem 'pry-rails', group: :development
 
 gem 'will_paginate', '~> 3.0.5'
 
+gem "paperclip", "~> 4.1"
+
+gem 'carrierwave'
+gem "rmagick", :require => 'RMagick'
+gem "fog"
+
+gem 'aws-sdk'
 
 group :test, :development do
   gem "minitest"
   gem 'capybara', '~> 2.1.0'
-  # gem 'capybara-webkit', '~> 1.1.1'
+  gem "capybara-webkit"
   gem 'selenium-webdriver'
   gem "rspec-rails", group: [:development, :test]
   gem "factory_girl_rails", group: [:development, :test]
   gem "faker", group: [:development, :test]
   gem "rails-erd", "~> 1.1.0"
+  gem "database_cleaner"
+  gem 'simplecov', :require => false
+  gem 'spork', '~> 1.0rc'
+  gem "guard-rspec"
+  gem "guard-spork"
 end
+
+# gem "formtastic"
+# gem 'formtastic-bootstrap', git: "https://github.com/mjbellantoni/formtastic-bootstrap"
+
+
+gem "simple_form", git: "https://github.com/plataformatec/simple_form"
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

@@ -10,4 +10,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_registration_url
     end
   end
+
+  def twitter
+    oauth_info = request.env['omniauth.auth'].to_hash
+    @user = User.find_for_twitter(oauth_info)
+
+     sign_in_and_redirect @user, event: :authentication, notice: "Thanks for signing in!"
+
+    # render text: "request.env['omniauth.auth']: #{request.env['omniauth.auth'].to_hash}
+    #               >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    #               >>>>>>> XXXXXXXX: #{request.env['omniauth.auth'].to_hash["uid"]}"
+  end
+
 end

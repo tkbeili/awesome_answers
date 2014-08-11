@@ -2,10 +2,18 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable#, :validatable
+
+  def email_required?
+    false
+  end
+
+  def email_changed?
+    false
+  end
 
   has_many :questions
-  has_many :answers
+
 
   has_many :likes
   has_many :liked_questions, through: :likes, source: :likeable, source_type: "Question"
@@ -26,22 +34,41 @@ class User < ActiveRecord::Base
     end
   end
 
-def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    user = User.where(:email => data["email"]).first
+  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+      data = access_token.info
+      user = User.where(:email => data["email"]).first
 
-    first_name = data["name"].split(" ")[0]
-    last_name = data["name"].split(" ")[1]
+      first_name = data["name"].split(" ")[0]
+      last_name = data["name"].split(" ")[1]
+
+      unless user
+          user = User.create(first_name: first_name,
+                             last_name: last_name,
+                             email: data["email"],
+                             password: Devise.friendly_token[0,20]
+                            )
+      end
+      user
+  end
+
+  def self.find_for_twitter(oauth_info)
+    info = oauth_info["info"]
+    user = User.where(provider: :twitter, uid: oauth_info["uid"]).first
+
+    first_name = info["name"].split(" ")[0]
+    last_name  = info["name"].split(" ")[1]
 
     unless user
-        user = User.create(first_name: first_name,
-                           last_name: last_name,
-                           email: data["email"],
-                           password: Devise.friendly_token[0,20]
-                          )
+      Rails.logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      user = User.create!(first_name: first_name,
+                          last_name: last_name,
+                          password: Devise.friendly_token[0,20],
+                          provider: :twitter,
+                          uid: oauth_info["uid"])
     end
     user
-end
+  end
+
 
   def tester
     self

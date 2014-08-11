@@ -38,6 +38,7 @@ describe CommentsController do
         post :create, answer_id: answer.id, answer: {body: ""}
       end
 
+
       it "renders 'new' template" do
         invalid_request
         expect(response).to render_template("questions/show")

@@ -2,6 +2,16 @@ class Question < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
 
+  mount_uploader :image, ImageUploader
+
+  # has_attached_file :image, 
+  #                   styles: {thumb: "50x50>", medium: "100x100>", large: "300x300" },
+  #                   default_url: ActionController::Base.helpers.asset_path('missing_:style.png')
+
+  
+  # validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
+
+
   has_many :categorizations
   has_many :categories, through: :categorizations
 
